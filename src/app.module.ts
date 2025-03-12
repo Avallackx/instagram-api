@@ -2,21 +2,22 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './common/auth/auth.module';
 import { UserModule } from './modules/User/user.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SvcConfigModule } from './config';
+import { HttpModule } from '@nestjs/axios';
+import { DataSourceOptions } from 'typeorm';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      //переписать
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'password',
-      database: 'test_db',
-      autoLoadEntities: true,
-      synchronize: true,
+    SvcConfigModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService<{ database: DataSourceOptions }, true>) =>
+        configService.get('database'),
+    }),
+    HttpModule.register({
+      timeout: 5000,
     }),
     AuthModule,
     UserModule,

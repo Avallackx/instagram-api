@@ -3,7 +3,7 @@ import { registerAs } from '@nestjs/config';
 import { join } from 'path';
 import { DataSourceOptions } from 'typeorm';
 
-import { NamingStrategy } from './db-naming.strategy';
+import { NamingStrategy } from './db.naming.strategy';
 
 export default registerAs('database', (): DataSourceOptions => {
   console.log(process.env.NODE_ENV, 12123);

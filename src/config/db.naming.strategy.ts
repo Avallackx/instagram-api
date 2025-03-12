@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+
+import * as pluralize from 'pluralize';
 import { DefaultNamingStrategy, NamingStrategyInterface } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import * as pluralize from 'pluralize';
 
 @Injectable()
 export class NamingStrategy extends DefaultNamingStrategy implements NamingStrategyInterface {

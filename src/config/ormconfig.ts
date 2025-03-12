@@ -2,7 +2,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { DataSource } from 'typeorm';
 
-import dbConfig from './db-config';
+import dbConfig from './db.config';
 
 ConfigModule.forRoot({
   envFilePath: [`.env.${process.env.NODE_ENV}.local`, `.env.${process.env.NODE_ENV}`],
